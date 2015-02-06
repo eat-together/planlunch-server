@@ -1,6 +1,8 @@
 class Appointment < ActiveRecord::Base
   validate :permitted_values_for_time
 
+  belongs_to :user
+
   private
 
   def permitted_values_for_time
