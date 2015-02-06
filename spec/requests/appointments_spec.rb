@@ -47,4 +47,16 @@ RSpec.describe "Appointments", :type => :request do
       expect(Appointment.first.place_id).to eq(2)
     end
   end
+
+  describe "DELETE /appointments" do
+    it "removes the todays appointment for user with token" do
+      user = User.create
+      Appointment.create(user_id: user.id, place_id: 1, time: "12:00", date: Time.zone.now)
+
+      delete appointment_path user.token
+
+      expect(response).to have_http_status(:ok)
+      expect(Appointment.count).to eq(0)
+    end
+  end
 end

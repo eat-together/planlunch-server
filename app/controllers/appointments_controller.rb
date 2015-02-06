@@ -38,6 +38,15 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def destroy
+    user = User.where(token: params[:id]).first
+    if user.present?
+      today = Time.zone.now.strftime("%Y-%m-%d")
+      appointment = Appointment.where(user_id: user.id, date: today).first
+      appointment.destroy
+    end
+  end
+
   private
 
   def appointment_params
