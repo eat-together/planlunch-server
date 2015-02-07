@@ -5,7 +5,7 @@ RSpec.describe "Users", :type => :request do
     it "responds with user token if credentials are correct" do
       user = User.create(name: 'foo', password: 'bar')
 
-      get '/login', {name: user.name, password: user.password}
+      get '/login', nil, {Authorization: user.name + ':' + user.password}
 
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
@@ -15,7 +15,7 @@ RSpec.describe "Users", :type => :request do
     it "responds with user token if credentials are correct" do
       user = User.create(name: 'foo', password: 'bar')
 
-      get '/login', {name: user.name, password: 'wrong password'}
+      get '/login', nil, {Authorization: user.name + ':' + 'wrong password'}
 
       expect(response).to have_http_status(:unauthorized)
     end

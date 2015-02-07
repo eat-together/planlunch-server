@@ -1,6 +1,7 @@
 class LoginController < ApplicationController
   def index
-    user = User.where(name: params[:name], password: params[:password]).first
+    credentials = request.headers['Authorization'].split(':')
+    user = User.where(name: credentials[0], password: credentials[1]).first
     if user.present?
       render json: {token: user.token}, status: :ok
     else
