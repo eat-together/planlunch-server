@@ -65,6 +65,12 @@ RSpec.describe "Appointments", :type => :request do
       expect(Appointment.count).to eq(0)
     end
 
+    it "responds with 200 if no appointment for user is present" do
+      user = User.create
+      delete appointment_path user.token
+      expect(response).to have_http_status(:ok)
+    end
+
     it "responds with 401 if user token is not valid" do
       delete appointment_path 'invalid'
 
