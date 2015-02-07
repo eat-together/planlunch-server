@@ -1,11 +1,9 @@
 class UsersController < ApplicationController
 
   def create
-    user = User.new(user_params)
-    user.save
+    user = User.create(user_params)
     render json: {token: user.token}, status: :created
   end
-
 
   private
 

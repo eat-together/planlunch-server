@@ -1,8 +1,8 @@
 class AppointmentsController < ApplicationController
 
-  def index
-    today = Time.zone.now.strftime("%Y-%m-%d")
+  before_action :authenticate_request, only: [:create, :destroy]
 
+  def index
     # TODO does its job but looks horrible, refactor!
     todays_appointments = Appointment.where(date: today)
     grouped_by_place = todays_appointments.group_by{|a| a.place_id}
@@ -24,36 +24,39 @@ class AppointmentsController < ApplicationController
   end
 
   def create
-    user = User.where(token: appointment_params[:user_token]).first
-    if user.present?
-      today = Time.zone.now.strftime("%Y-%m-%d")
-      appointment = Appointment.where(user_id: user.id, date: today).first
-      if appointment.present?
-        appointment.update(place_id: appointment_params[:place_id], time: appointment_params[:time])
-        render json: appointment, status: :ok, location: appointment
+    appointment = Appointment.where(user_id: @user.id, date: today).first
+    if appointment.present?
+      appointment.update(place_id: params[:place_id], time: params[:time])
+      render json: appointment
+    else
+      appointment = Appointment.create(user_id: @user.id, place_id: params[:place_id], time: params[:time], date: today)
+      render json: appointment, status: :created
+    end
+  end
+
+  def destroy
+    appointment = Appointment.where(user_id: @user.id, date: today).first
+    appointment.destroy if appointment.present?
+  end
+
+  private
+
+  def today
+    Time.zone.now.strftime("%Y-%m-%d")
+  end
+
+  def authenticate_request
+    token = ActionController::HttpAuthentication::Token.token_and_options(request)
+    if token && token[0]
+      user = User.where(token: token[0]).first
+      if user.present?
+        @user = user
       else
-        @appointment = Appointment.create(user_id: user.id, place_id: appointment_params[:place_id], time: appointment_params[:time], date: today)
-        render json: @appointment, status: :created, location: @appointment
+        render json: {}, status: :unauthorized
       end
     else
       render json: {}, status: :unauthorized
     end
   end
 
-  def destroy
-    user = User.where(token: params[:id]).first
-    if user.present?
-      today = Time.zone.now.strftime("%Y-%m-%d")
-      appointment = Appointment.where(user_id: user.id, date: today).first
-      appointment.destroy if appointment.present?
-    else
-      render json: {}, status: :unauthorized
-    end
-  end
-
-  private
-
-  def appointment_params
-    params.require(:appointment).permit(:user_token, :place_id, :time)
-  end
 end

@@ -28,7 +28,7 @@ RSpec.describe "Appointments", :type => :request do
     it "adds an appointment for user with token" do
       user = User.create(name: "foo")
       expect {
-        post appointments_path, {appointment: {user_token: user.token, place_id: 1, time: "12:00"}}
+        post appointments_path, {place_id: 1, time: "12:00"}, {Authorization: "Token token=\"#{user.token}\""}
       }.to change(Appointment, :count).by(1)
       expect(response).to have_http_status(:created)
       expect(Appointment.last.user_id).to eq(user.id)
@@ -39,7 +39,7 @@ RSpec.describe "Appointments", :type => :request do
       user = User.create
       Appointment.create(user_id: user.id, place_id: 1, time: "12:00", date: Time.zone.now)
 
-      post appointments_path, {appointment: {user_token: user.token, place_id: 2, time: onePm}}
+      post appointments_path, {place_id: 2, time: onePm}, {Authorization: "Token token=\"#{user.token}\""}
 
       expect(response).to have_http_status(:ok)
       expect(Appointment.count).to eq(1)
@@ -48,7 +48,7 @@ RSpec.describe "Appointments", :type => :request do
     end
 
     it "responds with 401 if user token is not valid" do
-      post appointments_path, {appointment: {user_token: 'invalid', place_id: 1, time: "12:00"}}
+      post appointments_path, {place_id: 1, time: "12:00"}, {Authorization: "Token token=\"invalid token\""}
 
       expect(response).to have_http_status(:unauthorized)
     end
@@ -59,7 +59,7 @@ RSpec.describe "Appointments", :type => :request do
       user = User.create
       Appointment.create(user_id: user.id, place_id: 1, time: "12:00", date: Time.zone.now)
 
-      delete appointment_path user.token
+      delete appointment_path(1), nil, {Authorization: "Token token=\"#{user.token}\""}
 
       expect(response).to have_http_status(:ok)
       expect(Appointment.count).to eq(0)
@@ -67,12 +67,12 @@ RSpec.describe "Appointments", :type => :request do
 
     it "responds with 200 if no appointment for user is present" do
       user = User.create
-      delete appointment_path user.token
+      delete appointment_path(1), nil, {Authorization: "Token token=\"#{user.token}\""}
       expect(response).to have_http_status(:ok)
     end
 
     it "responds with 401 if user token is not valid" do
-      delete appointment_path 'invalid'
+      delete appointment_path(1), nil, {Authorization: "Token token=\"invalid token\""}
 
       expect(response).to have_http_status(:unauthorized)
     end
