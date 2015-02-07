@@ -46,6 +46,12 @@ RSpec.describe "Appointments", :type => :request do
       expect(Appointment.first.time).to eq(onePm)
       expect(Appointment.first.place_id).to eq(2)
     end
+
+    it "responds with 401 if user token is not valid" do
+      post appointments_path, {appointment: {user_token: 'invalid', place_id: 1, time: "12:00"}}
+
+      expect(response).to have_http_status(:unauthorized)
+    end
   end
 
   describe "DELETE /appointments" do
@@ -57,6 +63,12 @@ RSpec.describe "Appointments", :type => :request do
 
       expect(response).to have_http_status(:ok)
       expect(Appointment.count).to eq(0)
+    end
+
+    it "responds with 401 if user token is not valid" do
+      delete appointment_path 'invalid'
+
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end

@@ -35,6 +35,8 @@ class AppointmentsController < ApplicationController
         @appointment = Appointment.create(user_id: user.id, place_id: appointment_params[:place_id], time: appointment_params[:time], date: today)
         render json: @appointment, status: :created, location: @appointment
       end
+    else
+      render json: {}, status: :unauthorized
     end
   end
 
@@ -44,6 +46,8 @@ class AppointmentsController < ApplicationController
       today = Time.zone.now.strftime("%Y-%m-%d")
       appointment = Appointment.where(user_id: user.id, date: today).first
       appointment.destroy
+    else
+      render json: {}, status: :unauthorized
     end
   end
 
