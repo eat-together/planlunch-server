@@ -5,7 +5,7 @@ class LoginController < ApplicationController
     if user.present?
       render json: {token: user.token}
     else
-      render json: {}, status: :unauthorized
+      render json: {errors: {login: 'Falsche Zugangsdaten'}}, status: :unauthorized
     end
 
   end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Users", :type => :request do
   describe "GET /login" do
     it "responds with user token if credentials are correct" do
-      user = User.create(name: 'foo', password: 'bar')
+      user = User.create(name: 'foo', email: 'foo', password: 'foo')
 
       get '/login', nil, {Authorization: user.name + ':' + user.password}
 
@@ -12,7 +12,7 @@ RSpec.describe "Users", :type => :request do
       expect(json["token"]).to eq(user.token)
     end
 
-    it "responds with user token if credentials are correct" do
+    it "responds with 401 if credentials are incorrect" do
       user = User.create(name: 'foo', password: 'bar')
 
       get '/login', nil, {Authorization: user.name + ':' + 'wrong password'}

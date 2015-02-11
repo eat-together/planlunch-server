@@ -10,5 +10,16 @@ RSpec.describe "Users", :type => :request do
       json = JSON.parse(response.body)
       expect(json["token"]).to eq(User.last.token)
     end
+
+    it "responds with a 422 if user with that name already exists" do
+      User.create(name: 'foo', email: 'foo', password: 'foo')
+      post users_path, {user: {name: "foo", email: "foo@bar.invalid", password: "bar"}}
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "responds with a 422 if name is empty" do
+      post users_path, {user: {name: "", email: "foo@bar.invalid", password: "bar"}}
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
   end
 end
