@@ -7,6 +7,5 @@ class LoginController < ApplicationController
     else
       render json: {errors: {login: 'Falsche Zugangsdaten'}}, status: :unauthorized
     end
-
   end
 end

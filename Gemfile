@@ -6,6 +6,8 @@ gem 'rails-api'
 gem 'spring', :group => :development
 gem 'sqlite3'
 gem 'bcrypt'
+gem 'rest-client'
+gem 'mini_magick'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
