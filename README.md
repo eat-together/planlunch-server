@@ -4,7 +4,7 @@
 ## Installation
 
 * `git clone` this repository
-* `bundle`
+* `bin/bundle`
 
 ## Running
 
