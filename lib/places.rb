@@ -78,11 +78,6 @@
     name: 'Café Sedan',
     distance: 519
 }, {
-    id: 13,
-    name: 'Kölner Botschaft',
-    website: 'http://www.koelnerbotschaft.de/kulinarisch.html',
-    distance: 2
-}, {
     id: 14,
     name: 'Inxmail Küche',
     distance: 0
