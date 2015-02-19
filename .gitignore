@@ -16,5 +16,5 @@
 !/log/.keep
 /tmp
 
-/public/menus
+/public/menus/*.png
 .DS_Store
