@@ -9,6 +9,7 @@ gem 'rest-client'
 gem 'mini_magick'
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'rails_12factor', group: :production
+gem 'rack-cors', require: 'rack/cors'
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
