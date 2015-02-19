@@ -18,5 +18,5 @@ exit if today == :sat || today == :sun
 
   image = MiniMagick::Image.read(response)
   image.crop crop_params
-  image.write "../public/menus/#{place[:name]}.png"
+  image.write "#{File.expand_path File.dirname(__FILE__)}/../public/menus/#{place[:name]}.png"
 end
