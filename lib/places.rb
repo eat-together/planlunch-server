@@ -177,11 +177,11 @@
     website: 'http://www.swfr.de/essen-trinken/speiseplaene/haus-zur-lieben-hand/',
     distance: 889,
     screenshot: {
-      mon: [370, 460, 270, 240],
-      tue: [370, 735, 270, 240],
-      wed: [370, 1012, 270, 240],
-      thu: [370, 1325, 270, 240],
-      fri: [370, 1625, 270, 240],
+      mon: [300, 460, 410, 240],
+      tue: [300, 695, 410, 240],
+      wed: [300, 985, 410, 240],
+      thu: [300, 1250, 410, 240],
+      fri: [300, 1515, 410, 240],
     }
 }, {
     id: 32,
