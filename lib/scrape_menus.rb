@@ -24,7 +24,7 @@ s3 = Aws::S3::Client.new(
   image = MiniMagick::Image.read(response)
   image.crop crop_params
 
-  response = s3.put_object(
+  s3.put_object(
     :bucket => "planlunch",
     :key => "#{place[:id]}.png",
     :body => image.to_blob
