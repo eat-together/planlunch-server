@@ -136,6 +136,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt
+  certified (~> 1.0.0)
   mini_magick
   pg
   rack-cors
