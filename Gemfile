@@ -24,5 +24,3 @@ gem 'rack-cors', require: 'rack/cors'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 gem "rspec-rails", :group => [:development, :test]
-
-ruby "2.2.0"
