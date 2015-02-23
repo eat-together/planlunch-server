@@ -11,6 +11,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'certified', '~> 1.0.0', platforms: [:mingw, :mswin]
 gem 'rails_12factor', group: :production
 gem 'rack-cors', require: 'rack/cors'
+gem 'aws-sdk'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

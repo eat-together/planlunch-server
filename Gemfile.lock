@@ -37,6 +37,15 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.0)
+    aws-sdk (2.0.27)
+      aws-sdk-resources (= 2.0.27)
+    aws-sdk-core (2.0.27)
+      builder (~> 3.0)
+      jmespath (~> 1.0)
+      multi_json (~> 1.0)
+      multi_xml (~> 0.5)
+    aws-sdk-resources (2.0.27)
+      aws-sdk-core (= 2.0.27)
     bcrypt (3.1.10)
     builder (3.2.2)
     diff-lcs (1.2.5)
@@ -45,6 +54,8 @@ GEM
       activesupport (>= 4.1.0)
     hike (1.2.3)
     i18n (0.7.0)
+    jmespath (1.0.2)
+      multi_json (~> 1.0)
     json (1.8.2)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
@@ -55,6 +66,7 @@ GEM
     mini_portile (0.6.2)
     minitest (5.5.1)
     multi_json (1.10.1)
+    multi_xml (0.5.5)
     netrc (0.10.2)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
@@ -135,6 +147,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk
   bcrypt
   certified (~> 1.0.0)
   mini_magick
